@@ -757,8 +757,8 @@ def bb_file_manager(subject):
                 "MB8*RESTING*.nii.gz",
                 "*TASK*REST*.nii.gz",
                 "*task*rest*.nii.gz",
-                "*epi_rest*.nii.gz",
-                "*epi_movie*.nii.gz",
+                "*musbid*.nii.gz",
+                "*MID*.nii.gz",
                 "*facerecognition*bold.nii*",
 
             ],
