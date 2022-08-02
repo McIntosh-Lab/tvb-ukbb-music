@@ -54,8 +54,8 @@ export PROBTRACKX_GPU="true"
 export REPARCELLATE="false" #TO BE MODIFIED BY USER
 
 #SETUP AFNI
-# export AFNIDIR=/opt/afni                                                        #TO BE MODIFIED BY USER
-export AFNIDIR="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/afni/20.3.05"
+export AFNIDIR=/shared/centos7/afni/21.3.06/abin         #MODIFIED BY SF 02.08.2022
+# export AFNIDIR="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/afni/20.3.05"
 
 #SETUP FREESURFER 
 # export FREESURFER_HOME=/cvmfs/soft.computecanada.ca/easybuild/software/2020/Core/freesurfer/5.3.0/bin/freesurfer                                          #TO BE MODIFIED BY USER
@@ -65,7 +65,7 @@ export AFNIDIR="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compil
 # source $FREESURFER_HOME/SetUpFreeSurfer.sh  > /dev/null
 
 #SETUP ANTS
-export ANTSPATH="/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Compiler/gcc9/ants/2.3.5/bin"
+export ANTSPATH="/shared/centos7/ants/2018-12-12/bin" #MODIFIED BY SF 02.08.2022
 
 export SOFTDIR="/opt/tvb-pipeline"						#TO BE MODIFIED BY USER (DEFAULT FOR SINGULARITY)
 
