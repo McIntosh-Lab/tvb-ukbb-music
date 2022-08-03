@@ -759,7 +759,7 @@ def bb_file_manager(subject):
                 "*task*rest*.nii.gz",
                 "*musbid*.nii.gz",
                 "*MID*.nii.gz",
-                "*facerecognition*bold.nii*",
+                "*epi.nii*",#MODIFIED BY SF 03.08.2022
 
             ],
             manage_fMRI,
