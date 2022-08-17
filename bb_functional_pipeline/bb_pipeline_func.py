@@ -130,28 +130,28 @@ def bb_pipeline_func(subject, fileConfiguration):
             )
             print("FEAT completed.")
 
-            print(f"Running rfMRI_{i} FIX...")
-            jobFIX = LT.runCommand(
-                logger,
-                "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
-                + subject
-                + f" {rfMRI_nums[i]}",
-                f"bb_fix_{i}_"
-                + subname
-            )
-            print("FIX completed.")
+#            print(f"Running rfMRI_{i} FIX...")
+#            jobFIX = LT.runCommand(
+#                logger,
+#                "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
+#                + subject
+#                + f" {rfMRI_nums[i]}",
+#                f"bb_fix_{i}_"
+#                + subname
+#            )
+#            print("FIX completed.")
 
-            print("Running FC...")
+#            print("Running FC...")
             ### compute FC using parcellation
-            jobFC = LT.runCommand(
-                logger,
-                "$BB_BIN_DIR/bb_functional_pipeline/tvb_FC "
-                + subject
-                + f" {rfMRI_nums[i]}",
-                f"tvb_FC_{i}_"
-                + subname
-            )
-            print("FC completed.")
+#            jobFC = LT.runCommand(
+#                logger,
+#                "$BB_BIN_DIR/bb_functional_pipeline/tvb_FC "
+#                + subject
+#                + f" {rfMRI_nums[i]}",
+#                f"tvb_FC_{i}_"
+#                + subname
+#            )
+#            print("FC completed.")
             ### don't generate group-ICA RSNs
             # jobDR = LT.runCommand(
             # logger,
@@ -165,19 +165,19 @@ def bb_pipeline_func(subject, fileConfiguration):
             # + " $BB_BIN_DIR/bb_functional_pipeline/bb_ICA_dual_regression "
             # + subject,
             # )
-            jobCLEAN = LT.runCommand(
-                logger,
-                "$BB_BIN_DIR/bb_functional_pipeline/bb_clean_fix_logs "
-                + subject
-                + f" {rfMRI_nums[i]}",
-                f"bb_rfMRI_{i}_clean_"
-                + subname
-            )
-            print("Cleaning up rfMRI files...")
+#            jobCLEAN = LT.runCommand(
+#                logger,
+#                "$BB_BIN_DIR/bb_functional_pipeline/bb_clean_fix_logs "
+#                + subject
+#                + f" {rfMRI_nums[i]}",
+#                f"bb_rfMRI_{i}_clean_"
+#                + subname
+#            )
+#            print("Cleaning up rfMRI files...")
 
-            jobCLEAN_LAST_rfMRI = jobCLEAN
-            jobsToWaitFor += f"{jobCLEAN},"
-            print("Done.")
+#            jobCLEAN_LAST_rfMRI = jobCLEAN
+#            jobsToWaitFor += f"{jobCLEAN},"
+#            print("Done.")
         print("rfMRI subpipe complete.")
 
     else:
@@ -267,3 +267,4 @@ if __name__ == "__main__":
         sys.exit(1)
     # call pipeline
     bb_pipeline_func(subject, fileConfig)
+

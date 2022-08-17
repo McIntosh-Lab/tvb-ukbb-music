@@ -63,6 +63,7 @@ export AFNIDIR=/shared/centos7/afni/21.3.06/abin         #MODIFIED BY SF 02.08.2
 # if usin on Compute Canada, load module first
 #source $EBROOTFREESURFER/FreeSurferEnv.sh#SF 29.07.2022
 # source $FREESURFER_HOME/SetUpFreeSurfer.sh  > /dev/null
+source $FREESURFER_HOME/SetUpFreeSurfer.sh #CHANGED BY SF 15.08.2022
 
 #SETUP ANTS
 export ANTSPATH="/shared/centos7/ants/2018-12-12/bin" #MODIFIED BY SF 02.08.2022
