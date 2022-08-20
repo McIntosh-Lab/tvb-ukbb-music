@@ -56,28 +56,28 @@ echo "set alt_ex_func(1)      \""$nameDir"/fMRI/rfMRI_SBREF.nii.gz\"" >> $1/fMRI
 
 # for now, any rfMRI file found that isn't the movie file is assigned
 # the rest fsf
-if [[ "$2" == 1 ]]; then
-    echo "set unwarp_files(1)     \""$nameDir"/gradEchoFieldMap/fmap_movie_rads.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
-    echo "set unwarp_files_mag(1) \""$nameDir"/gradEchoFieldMap/fmap_movie_mag_brain_ero.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
-else
-    echo "set unwarp_files(1)     \""$nameDir"/gradEchoFieldMap/fmap_rest_rads.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
-    echo "set unwarp_files_mag(1) \""$nameDir"/gradEchoFieldMap/fmap_rest_mag_brain_ero.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
+#if [[ "$2" == 1 ]]; then
+#    echo "set unwarp_files(1)     \""$nameDir"/gradEchoFieldMap/fmap_movie_rads.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
+#    echo "set unwarp_files_mag(1) \""$nameDir"/gradEchoFieldMap/fmap_movie_mag_brain_ero.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
+#else
+#    echo "set unwarp_files(1)     \""$nameDir"/gradEchoFieldMap/fmap_rest_rads.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
+#   echo "set unwarp_files_mag(1) \""$nameDir"/gradEchoFieldMap/fmap_rest_mag_brain_ero.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
 
-fi
+#fi
 
-# echo "set unwarp_files(1) 0" >> $1/fMRI/rfMRI_$2.fsf
-# echo "set unwarp_files_mag(1) 0" >> $1/fMRI/rfMRI_$2.fsf
+echo "set unwarp_files(1) 0" >> $1/fMRI/rfMRI_$2.fsf
+echo "set unwarp_files_mag(1) 0" >> $1/fMRI/rfMRI_$2.fsf 
 echo "set highres_files(1)    \""$nameDir"/fMRI/symlink/T1_brain.nii.gz\"" >> $1/fMRI/rfMRI_$2.fsf
-echo "set fmri(unwarp_dir) y-" >> $1/fMRI/rfMRI_$2.fsf #COMMENTED OUT 17.08.2022
+echo "set fmri(unwarp_dir) 0" >> $1/fMRI/rfMRI_$2.fsf # COMMENTED OUT 17.08.2022
 #echo "set fmri(gdc) \""$nameDir"/fMRI/rfMRI_SBREF_ud_warp.nii.gz\"" >> $1/fMRI/rfMRI.fsf # ADDED BY SF 04.08.2022
 echo "set fmri(tr) $fmriTR" >> $1/fMRI/rfMRI_$2.fsf
 echo "set fmri(npts) $fmriNumVol"  >> $1/fMRI/rfMRI_$2.fsf
 echo "set fmri(dwell) $fmriDwell" >> $1/fMRI/rfMRI_$2.fsf
 echo "set fmri(te) $fmriTE" >> $1/fMRI/rfMRI_$2.fsf
-echo "set fmri(st) 2" >> $1/fMRI/rfMRI_$2.fsf #slice time correction, descending COMMENTED OUT 17.08.2022
+echo "set fmri(st) 0" >> $1/fMRI/rfMRI_$2.fsf # slice time correction, turned off COMMENTED OUT 17.08.2022
 echo "set fmri(smooth) 5" >> $1/fMRI/rfMRI_$2.fsf #spatial smoothing FWHM (mm) 
 echo "set fmri(poststats_yn) 0" >> $1/fMRI/rfMRI_$2.fsf
-
+#echo "set fmri(ndelete) 0" >> $1/fMRI/rfMRI_$2.fsf
 
 echo "set fmri(dim_yn) 0" >> $1/fMRI/rfMRI_$2.fsf #CHANGED BY SF 10.08.2022
 echo "set fmri(dim) 150" >> $1/fMRI/rfMRI_$2.fsf #CHANGED BY SF 10.08.2022

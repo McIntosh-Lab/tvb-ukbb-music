@@ -110,7 +110,7 @@ def main(cli_args=None):
         jobSTEP5 = "-1"
 
         # jobSTEP1 = bb_pipeline_struct(subject, runTopup, fileConfig)
-#        bb_pipeline_struct(subject, runTopup, fileConfig) #COMMENT OUT TO SKIP STRUCTURAL PIPE
+        bb_pipeline_struct(subject, runTopup, fileConfig) #COMMENT OUT TO SKIP STRUCTURAL PIPE
         #handle cases: when jobstep1 would typically trigger the following
         if isinstance(jobSTEP1, int):
             if jobSTEP1 == -1:
