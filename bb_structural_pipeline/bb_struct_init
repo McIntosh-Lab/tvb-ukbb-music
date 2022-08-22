@@ -108,76 +108,16 @@ mv transforms/T1_brain_to_MNI.nii.gz .
 
 #Run FAST for initial bias correction
 mkdir T1_fast
-${FSLDIR}/bin/fast -b -o T1_fast/T1_fast T1_brain
+${FSLDIR}/bin/fast -b -o T1_fast/T1_brain T1_brain
 
 #Apply bias field correction to T1
 if [ -f T1_fast/T1_fast_bias.nii.gz ] ; then
-    ${FSLDIR}/bin/fslmaths T1.nii.gz -div T1_fast/T1_fast_bias.nii.gz T1_unbiased.nii.gz
-    ${FSLDIR}/bin/fslmaths T1_brain.nii.gz -div T1_fast/T1_fast_bias.nii.gz T1_unbiased_brain.nii.gz
+    ${FSLDIR}/bin/fslmaths T1.nii.gz -div T1_fast/T1_brain_bias.nii.gz T1_unbiased.nii.gz
+    ${FSLDIR}/bin/fslmaths T1_brain.nii.gz -div T1_fast/T1_brain_bias.nii.gz T1_unbiased_brain.nii.gz
 else
     echo "WARNING: There was no bias field estimation. Bias field correction cannot be applied to T1."
 fi
 
-
-
-
-subject_age=""
-decile=""
-while read line; do
-    read a b <<< ${line}
-    if [[ $a = $1 ]]; then
-        subject_age=$b
-    fi
-done <$SUBJECT_AGE_LIST
-
-subject_age=`echo "${subject_age%%.*}" | sed 's/\r$//'`
-
-if [[ $subject_age = "NaN" ]]; then
-  decile=`echo $1 | head -c 7 | tail -c 1`
-  decile=`echo $((decile * 10))`
-else
-  decile=`echo $((subject_age / 10))`
-  decile=`echo $((decile * 10))`
-fi
-
-
-while read line; do
-    read a b c <<< ${line}
-    if [[ $a = $decile ]]; then
-        AGE_SPEC_TEMPLATE=$b
-        FAST_PRIORS_PREFIX=$c
-    fi
-done <$AGE_SPECIFIC_TEMPLATE_LIST
-
-
-AGE_SPEC_TEMPLATE=`eval echo ${AGE_SPEC_TEMPLATE}`
-FAST_PRIORS_PREFIX=`eval echo ${FAST_PRIORS_PREFIX}`
-
-if [ -z "$AGE_SPEC_TEMPLATE" ] || [ -z "$FAST_PRIORS_PREFIX" ] ;
-then
-  AGE_SPEC_TEMPLATE="$templ/age-specific/avg152T1_brain"
-  FAST_PRIORS_PREFIX="$templ/age-specific/avg152T1"
-fi
-
-
-#Generate additional registration to age-specific template (and its inverse)
-${FSLDIR}/bin/flirt -in T1_unbiased_brain -ref $AGE_SPEC_TEMPLATE -o transforms/T1_unbiased_brain_to_AgeSpecTemplate -omat transforms/T1_to_AgeSpecTemplate.mat
-
-
-${FSLDIR}/bin/convert_xfm -omat transforms/AgeSpecTemplate_to_T1.mat -inverse transforms/T1_to_AgeSpecTemplate.mat
-
-
-#Run FAST with age-specific priors on bias-corrected T1 brain in AgeSpecTemplate space
-${FSLDIR}/bin/fast -N -A ${FAST_PRIORS_PREFIX}_csf ${FAST_PRIORS_PREFIX}_gm ${FAST_PRIORS_PREFIX}_wm -o T1_fast/T1_brain_to_AgeSpecTemplate transforms/T1_unbiased_brain_to_AgeSpecTemplate
-
-
-#Register the above generated T1 brain FAST outputs from AgeSpecTemplate space to T1 space
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_mixeltype -ref T1_unbiased_brain -out T1_fast/T1_brain_mixeltype -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_pve_0 -ref T1_unbiased_brain -out T1_fast/T1_brain_pve_0 -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_pve_1 -ref T1_unbiased_brain -out T1_fast/T1_brain_pve_1 -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_pve_2 -ref T1_unbiased_brain -out T1_fast/T1_brain_pve_2 -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_pveseg -ref T1_unbiased_brain -out T1_fast/T1_brain_pveseg -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
-${FSLDIR}/bin/flirt -interp nearestneighbour -in T1_fast/T1_brain_to_AgeSpecTemplate_seg -ref T1_unbiased_brain -out T1_fast/T1_brain_seg -init transforms/AgeSpecTemplate_to_T1.mat -applyxfm
 
 
 
