@@ -110,7 +110,7 @@ def main(cli_args=None):
         jobSTEP5 = "-1"
 
         # jobSTEP1 = bb_pipeline_struct(subject, runTopup, fileConfig)
-        bb_pipeline_struct(subject, runTopup, fileConfig) #COMMENT OUT TO SKIP STRUCTURAL PIPE
+#        bb_pipeline_struct(subject, runTopup, fileConfig) #COMMENT OUT TO SKIP STRUCTURAL PIPE
         #handle cases: when jobstep1 would typically trigger the following
         if isinstance(jobSTEP1, int):
             if jobSTEP1 == -1:
@@ -139,14 +139,14 @@ def main(cli_args=None):
         bb_pipeline_func(subject, fileConfig)
 #        bb_pipeline_diff(subject, fileConfig) #COMMENTED OUT BY SF 12.08.2022
 
-#        bb_IDP(
-#            subject, fileConfig
-#        )
+        bb_IDP(
+            subject, fileConfig
+        )
 
-#        tvb_bb_QC(
-#            subject,
-#            fileConfig
-#        )
+        tvb_bb_QC(
+            subject,
+            fileConfig
+        )
 
     LT.finishLogging(logger)
     # return jobSTEP5

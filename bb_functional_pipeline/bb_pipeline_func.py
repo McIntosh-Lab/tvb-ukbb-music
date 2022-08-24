@@ -73,17 +73,17 @@ def bb_pipeline_func(subject, fileConfiguration):
 
     print("Beginning functional pipeline")
 
-    print("Running bb_postprocess_struct...")
-    jobPOSTPROCESS = LT.runCommand(
-        logger,
-        "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
-        + subject,
-        "bb_postprocess_struct_"
-        + subname
-    )
-    print("bb_postprocess_struct completed.")
+#    print("Running bb_postprocess_struct...")
+#    jobPOSTPROCESS = LT.runCommand(
+#        logger,
+#        "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
+#        + subject,
+#        "bb_postprocess_struct_"
+#        + subname
+#    )
+#    print("bb_postprocess_struct completed.")
 
-#    print("Running tvb_prepare_gradEchoFieldMap...")
+#    print("Running tvb_prepare_gradEchoFieldMap...") # KEEP THIS SECTION COMMENTED OUT SF 22.08.2022
 #    jobGEFIELDMAP = LT.runCommand(
 #        logger,
 #        "$BB_BIN_DIR/bb_functional_pipeline/tvb_prepare_gradEchoFieldMap "
@@ -102,56 +102,56 @@ def bb_pipeline_func(subject, fileConfiguration):
             # if it's the first rfMRI file start upon completion of fieldmap
             # otherwise use clean job ID from previous rfMRI iteration
 
-            print(f"Running rfMRI_{i} prep...")
-            jobPREPARE_R = LT.runCommand(
-                logger,
-                "$BB_BIN_DIR/bb_functional_pipeline/bb_prepare_rfMRI "
-                + subject
-                + f" {rfMRI_nums[i]}",
-                f"bb_prepare_rfMRI_{i}_"
-                + subname
-            )
+#            print(f"Running rfMRI_{i} prep...")
+#            jobPREPARE_R = LT.runCommand(
+#                logger,
+#                "$BB_BIN_DIR/bb_functional_pipeline/bb_prepare_rfMRI "
+#                + subject
+#                + f" {rfMRI_nums[i]}",
+#                f"bb_prepare_rfMRI_{i}_"
+#                + subname
+#            )
             # TODO: Embed the checking of the fieldmap inside the independent steps -- Every step should check if the previous one has ended.
             #print(f"FILE CONFIG IN FUNC: {fileConfiguration}")
             #if ("rfMRI" in fileConfiguration) and (fileConfiguration["rfMRI"] != ""):
 
-            print(f"rfMRI_{i} prep completed.")
+#            print(f"rfMRI_{i} prep completed.")
 
-            print("Running FEAT...")
-            jobFEAT_R = LT.runCommand(
+#            print("Running FEAT...")
+#            jobFEAT_R = LT.runCommand(
+#                logger,
+#                "feat "
+#                + baseDir
+#                #
+#                # + f"/fMRI/rfMRI_{i}.fsf " + subject,
+#                + f"/fMRI/rfMRI_{i}.fsf",
+#                f"bb_feat_rfMRI_{i}_ns_"
+#                + subname
+#            )
+#            print("FEAT completed.")
+
+            print(f"Running rfMRI_{i} FIX...")
+            jobFIX = LT.runCommand(
                 logger,
-                "feat "
-                + baseDir
-                #
-                # + f"/fMRI/rfMRI_{i}.fsf " + subject,
-                + f"/fMRI/rfMRI_{i}.fsf",
-                f"bb_feat_rfMRI_{i}_ns_"
+                "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
+                + subject
+                + f" {rfMRI_nums[i]}",
+                f"bb_fix_{i}_"
                 + subname
             )
-            print("FEAT completed.")
+            print("FIX completed.")
 
-#            print(f"Running rfMRI_{i} FIX...")
-#            jobFIX = LT.runCommand(
-#                logger,
-#                "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
-#                + subject
-#                + f" {rfMRI_nums[i]}",
-#                f"bb_fix_{i}_"
-#                + subname
-#            )
-#            print("FIX completed.")
-
-#            print("Running FC...")
+            print("Running FC...")
             ### compute FC using parcellation
-#            jobFC = LT.runCommand(
-#                logger,
-#                "$BB_BIN_DIR/bb_functional_pipeline/tvb_FC "
-#                + subject
-#                + f" {rfMRI_nums[i]}",
-#                f"tvb_FC_{i}_"
-#                + subname
-#            )
-#            print("FC completed.")
+            jobFC = LT.runCommand(
+                logger,
+                "$BB_BIN_DIR/bb_functional_pipeline/tvb_FC "
+                + subject
+                + f" {rfMRI_nums[i]}",
+                f"tvb_FC_{i}_"
+                + subname
+            )
+            print("FC completed.")
             ### don't generate group-ICA RSNs
             # jobDR = LT.runCommand(
             # logger,
@@ -165,19 +165,19 @@ def bb_pipeline_func(subject, fileConfiguration):
             # + " $BB_BIN_DIR/bb_functional_pipeline/bb_ICA_dual_regression "
             # + subject,
             # )
-#            jobCLEAN = LT.runCommand(
-#                logger,
-#                "$BB_BIN_DIR/bb_functional_pipeline/bb_clean_fix_logs "
-#                + subject
-#                + f" {rfMRI_nums[i]}",
-#                f"bb_rfMRI_{i}_clean_"
-#                + subname
-#            )
-#            print("Cleaning up rfMRI files...")
+            jobCLEAN = LT.runCommand(
+                logger,
+                "$BB_BIN_DIR/bb_functional_pipeline/bb_clean_fix_logs "
+                + subject
+                + f" {rfMRI_nums[i]}",
+                f"bb_rfMRI_{i}_clean_"
+                + subname
+            )
+            print("Cleaning up rfMRI files...")
 
-#            jobCLEAN_LAST_rfMRI = jobCLEAN
-#            jobsToWaitFor += f"{jobCLEAN},"
-#            print("Done.")
+            jobCLEAN_LAST_rfMRI = jobCLEAN
+            jobsToWaitFor += f"{jobCLEAN},"
+            print("Done.")
         print("rfMRI subpipe complete.")
 
     else:

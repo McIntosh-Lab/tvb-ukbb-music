@@ -111,7 +111,7 @@ mkdir T1_fast
 ${FSLDIR}/bin/fast -b -o T1_fast/T1_brain T1_brain
 
 #Apply bias field correction to T1
-if [ -f T1_fast/T1_fast_bias.nii.gz ] ; then
+if [ -f T1_fast/T1_brain_bias.nii.gz ] ; then
     ${FSLDIR}/bin/fslmaths T1.nii.gz -div T1_fast/T1_brain_bias.nii.gz T1_unbiased.nii.gz
     ${FSLDIR}/bin/fslmaths T1_brain.nii.gz -div T1_fast/T1_brain_bias.nii.gz T1_unbiased_brain.nii.gz
 else
