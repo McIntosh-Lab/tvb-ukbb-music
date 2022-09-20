@@ -73,7 +73,7 @@ def bb_pipeline_func(subject, fileConfiguration):
 
     print("Beginning functional pipeline")
 
-#    print("Running bb_postprocess_struct...")
+    print("Running bb_postprocess_struct...")
 #    jobPOSTPROCESS = LT.runCommand(
 #        logger,
 #        "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
@@ -127,20 +127,33 @@ def bb_pipeline_func(subject, fileConfiguration):
 #                + f"/fMRI/rfMRI_{i}.fsf",
 #                f"bb_feat_rfMRI_{i}_ns_"
 #                + subname
-#            )
+#           )
 #            print("FEAT completed.")
 
             print(f"Running rfMRI_{i} FIX...")
-            jobFIX = LT.runCommand(
-                logger,
-                "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
-                + subject
-                + f" {rfMRI_nums[i]}",
-                f"bb_fix_{i}_"
-                + subname
+            training_file = 0 # This next piece toggles between the training files
+            if rfMRI_nums[i] == 0:
+                training_file = "musebid_rest_Training.RData"
+                jobFIX = LT.runCommand(
+                    logger,
+                    "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
+                    + subject
+                    + f" {rfMRI_nums[i]} "
+                    + training_file,
+                    f"bb_fix_{i}_"
+                    + subname
+            elif rfMRI_nums[i] == 1:
+                training_file = "musebid_music_Training.RData"
+                jobFIX = LT.runCommand(
+                    logger,
+                    "$BB_BIN_DIR/bb_functional_pipeline/bb_fix "
+                    + subject
+                    + f" {rfMRI_nums[i]} "
+		    + training_file,
+                    f"bb_fix_{i}_"
+                    + subname
             )
             print("FIX completed.")
-
             print("Running FC...")
             ### compute FC using parcellation
             jobFC = LT.runCommand(
