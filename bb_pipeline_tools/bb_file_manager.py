@@ -460,14 +460,14 @@ def manage_fMRI(listFiles, flag):
             print(f"SBRef_name: {SBRef_name}")
             generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_0"])
             fileConfig[flag + "_SBRef_0"] = idealConfig[flag + "_SBRef_0"]
-            print("SBRef 0 generated.")
+            print("SBRef 0 generated using",SBRef_name)
             
             idx = 1
             SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
             print(f"SBRef_name: {SBRef_name}")
             generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_1"])
             fileConfig[flag + "_SBRef_1"] = idealConfig[flag + "_SBRef_1"]
-            print("SBRef 1 generated.")
+            print("SBRef 1 generated using",SBRef_name)
             
     # There are several fMRI images but neither of them have more than one volume
     else:
