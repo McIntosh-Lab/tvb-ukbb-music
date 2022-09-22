@@ -132,7 +132,7 @@ def bb_pipeline_func(subject, fileConfiguration):
 
             print(f"Running rfMRI_{i} FIX...")
             training_file = 0 # This next piece toggles between the training files
-            if rfMRI_nums[i] == 0:
+            if rfMRI_nums[i] == "0":
                 training_file = "musebid_rest_Training.RData"
                 jobFIX = LT.runCommand(
                     logger,
@@ -142,7 +142,8 @@ def bb_pipeline_func(subject, fileConfiguration):
                     + training_file,
                     f"bb_fix_{i}_"
                     + subname
-            elif rfMRI_nums[i] == 1:
+            )
+            elif rfMRI_nums[i] == "1":
                 training_file = "musebid_music_Training.RData"
                 jobFIX = LT.runCommand(
                     logger,
