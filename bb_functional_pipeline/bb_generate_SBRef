@@ -25,7 +25,7 @@
 origIN=`$FSLDIR/bin/remove_ext $1`
 IN=${origIN}_tmp
 # OUT=${origIN}_SBREF
-OUT=${origIN:0:${#origIN} - 2}_SBREF
+OUT=${origIN:0:${#origIN} - 2}_SBREF_${4}
 
 echo "origIN: $origIN"
 echo "input: $IN"
