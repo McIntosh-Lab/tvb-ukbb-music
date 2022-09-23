@@ -67,6 +67,9 @@ for f in `$FSLDIR/bin/imglob grot*` ; do
   done
 done
 
+rm scores.txt 
+#remove prev scores because the script appends
+
 for f in `$FSLDIR/bin/imglob grot*` ; do
   ff=`echo $f | sed 's/grot//g'`
   echo $ff ${scores[$ff]} >> scores.txt
