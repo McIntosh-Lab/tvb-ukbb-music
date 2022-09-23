@@ -59,13 +59,17 @@ def formatFileConfig():
     return result
 
 
-def generate_SBRef(origPath, outputPath):
+def generate_SBRef(origPath, outputPath, fmri_num):
     commandToRun = (
         os.environ["BB_BIN_DIR"]
         + "/bb_functional_pipeline/bb_generate_SBRef "
         + origPath
         + " "
         + outputPath
+        + " "
+        + '""'
+        + " "
+        + fmri_num
     )
     logger.warn("There was no SBRef data for the subject " + origPath)
     logger.warn(
@@ -458,14 +462,14 @@ def manage_fMRI(listFiles, flag):
             idx = 0
             SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
             print(f"SBRef_name: {SBRef_name}")
-            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_0"])
+            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_0"], str(idx))
             fileConfig[flag + "_SBRef_0"] = idealConfig[flag + "_SBRef_0"]
             print("SBRef 0 generated using",SBRef_name)
             
             idx = 1
             SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
             print(f"SBRef_name: {SBRef_name}")
-            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_1"])
+            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_1"], str(idx))
             fileConfig[flag + "_SBRef_1"] = idealConfig[flag + "_SBRef_1"]
             print("SBRef 1 generated using",SBRef_name)
             
