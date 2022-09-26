@@ -770,8 +770,6 @@ def bb_file_manager(subject):
                 "*TASK*REST*.nii.gz",
                 "*task*rest*.nii.gz",
                 "*musbid*.nii.gz",
-                "*MID*.nii.gz",
-
             ],
             manage_fMRI,
             "rfMRI",

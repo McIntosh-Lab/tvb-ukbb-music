@@ -25,6 +25,7 @@ if [ -d $1/fMRI/rfMRI_$2.ica ] ; then
     ${FSLDIR}/bin/imcp ${origDir}/$1/T1/T1_fast/T1_brain_pveseg reg/highres_pveseg
     # ${FSLDIR}/bin/imcp $1/T1/T1_fast/T1_brain_pveseg reg/highres_pveseg
     ${FSLDIR}/bin/invwarp --ref=reg/example_func -w reg/example_func2standard_warp -o reg/standard2example_func_warp
+#    mv filtered_func_data.nii.gz filtered_func_data_clean.nii.gz # 22.09 Experimentation
     ${FSL_FIXDIR}/fix . ${FSL_FIXDIR}/training_files/${3} 20 -m -h 100 # CHANGED 20.09.2022
 #    ${FSL_FIXDIR}/fix -a hand_labels_noise.txt -m -h 100 #12.08.2022 WORKSHOP THIS
 

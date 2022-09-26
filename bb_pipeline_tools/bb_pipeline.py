@@ -89,15 +89,15 @@ def main(cli_args=None):
         logger.info("File configuration after running file manager: " + str(fileConfig))
 
         # runTopup ==> Having fieldmap
-#        if not (
-#            (("AP" in fileConfig) and (fileConfig["AP"] != ""))
-#            and (("PA" in fileConfig) and (fileConfig["PA"] != ""))
-#        ):
-#            logger.warn("There is no proper AP/PA data. Thus, TOPUP will not be run")
-#            runTopup = False
-#            print("NO TOPUP")
-#        else:
-#            runTopup = True
+        if not (
+            (("AP" in fileConfig) and (fileConfig["AP"] != ""))
+            and (("PA" in fileConfig) and (fileConfig["PA"] != ""))
+        ):
+            logger.warn("There is no proper AP/PA data. Thus, TOPUP will not be run")
+            runTopup = False
+            print("NO TOPUP")
+        else:
+            runTopup = True
 
         # set for now
         # runTopup = True
@@ -110,16 +110,16 @@ def main(cli_args=None):
         jobSTEP5 = "-1"
 
         # jobSTEP1 = bb_pipeline_struct(subject, runTopup, fileConfig)
-#        bb_pipeline_struct(subject, runTopup, fileConfig) # COMMENT OUT TO SKIP STRUCTURAL PIPE
+        bb_pipeline_struct(subject, runTopup, fileConfig) # COMMENT OUT TO SKIP STRUCTURAL PIPE
         #handle cases: when jobstep1 would typically trigger the following
-#        if isinstance(jobSTEP1, int):
-#            if jobSTEP1 == -1:
-#                print(
-#                    "This subject could not be run. Please check the logs for more information."
-#                )
-#                return -1
-#        if jobSTEP1[-3:] == ",-1":
-#            jobSTEP1 = jobSTEP1[:-3]
+        if isinstance(jobSTEP1, int):
+            if jobSTEP1 == -1:
+                print(
+                    "This subject could not be run. Please check the logs for more information."
+                )
+                return -1
+        if jobSTEP1[-3:] == ",-1":
+            jobSTEP1 = jobSTEP1[:-3]
 
         # print(f"jobSTEP1: {jobSTEP1}")
         # jobSTEP1 = int(jobSTEP1)
@@ -136,17 +136,17 @@ def main(cli_args=None):
         #     subject,
         #     fileConfig
         # )
-#        bb_pipeline_func(subject, fileConfig)
+        bb_pipeline_func(subject, fileConfig)
 #        bb_pipeline_diff(subject, fileConfig) # COMMENTED OUT BY SF 12.08.2022
 
-#        bb_IDP(
-#            subject, fileConfig
-#        )
+        bb_IDP(
+            subject, fileConfig
+        )
 
-#        tvb_bb_QC(
-#            subject,
-#            fileConfig
-#        )
+        tvb_bb_QC(
+            subject,
+            fileConfig
+        )
 
         createrdata() #This line creates the training file. We run it once with a single subject, then comment it out evermore
     LT.finishLogging(logger)
