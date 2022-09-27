@@ -932,7 +932,7 @@ def bb_file_manager(subject):
                 "*musbid*.nii.gz",
                 ]
                 action = manage_fMRI_missingSBRef
-                args = "rfMRI"
+                args = ["rfMRI"]
 
                 listFiles = []
                 for fileTy in patterns:
@@ -977,8 +977,7 @@ def bb_file_manager(subject):
         listFiles = [fl for fl in listF if fl[-4:] != ".log"]
 
         print("FILES: ")
-        print(
-        )
+        print(listFiles)
         # Organize the files in sets
         for patterns_action in patterns_actions:
             patterns = patterns_action[0]
