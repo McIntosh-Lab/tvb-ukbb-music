@@ -924,8 +924,15 @@ def bb_file_manager(subject):
             
             #ADDED for sbref fixes
             print("sbref1 fix")
-            del fileConfig["rfMRI_oldpath_1"]
-            del fileConfig["rfMRI_1"]
+            
+            try:
+                del fileConfig["rfMRI_oldpath_1"]
+            except:
+                print("oldpath gone")
+            try:
+                del fileConfig["rfMRI_1"]
+            except:
+                print("rfmri gone")
 
             for patterns_action in patterns_actions:
                 patterns = [
