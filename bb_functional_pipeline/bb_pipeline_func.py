@@ -73,15 +73,15 @@ def bb_pipeline_func(subject, fileConfiguration):
 
     print("Beginning functional pipeline")
 
-    print("Running bb_postprocess_struct...")
-    jobPOSTPROCESS = LT.runCommand(
-        logger,
-        "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
-        + subject,
-        "bb_postprocess_struct_"
-        + subname
-    )
-    print("bb_postprocess_struct completed.")
+#     print("Running bb_postprocess_struct...")
+#     jobPOSTPROCESS = LT.runCommand(
+#         logger,
+#         "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
+#         + subject,
+#         "bb_postprocess_struct_"
+#         + subname
+#     )
+#     print("bb_postprocess_struct completed.")
 
 #    print("Running tvb_prepare_gradEchoFieldMap...") # KEEP THIS SECTION COMMENTED OUT SF 22.08.2022
 #    jobGEFIELDMAP = LT.runCommand(
@@ -98,7 +98,7 @@ def bb_pipeline_func(subject, fileConfiguration):
 
     if len(rfMRI_nums) > 0:
         print("rfMRI files found. Running rfMRI subpipe")
-        for i in range(len(rfMRI_nums)):
+        for i in [1]:
             # if it's the first rfMRI file start upon completion of fieldmap
             # otherwise use clean job ID from previous rfMRI iteration
 
