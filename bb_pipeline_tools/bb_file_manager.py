@@ -579,7 +579,7 @@ def manage_fMRI_missingSBRef(listFiles, flag):
         for i in range(len(listFiles)):
             # don't add SBref file if it was added to the config
             if not (i == ind and dim[i] == 1):
-                move_index_file_add_to_config(listFiles[i], flag, i, False)
+                move_index_file_add_to_config(listFiles[i], flag, 1, False)
 
         if dim[ind] == 1:
             move_file_add_to_config(listFiles[ind], flag + "_SBRef", False)
