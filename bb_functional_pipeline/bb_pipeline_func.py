@@ -73,15 +73,15 @@ def bb_pipeline_func(subject, fileConfiguration):
 
     print("Beginning functional pipeline")
 
-#     print("Running bb_postprocess_struct...")
-#     jobPOSTPROCESS = LT.runCommand(
-#         logger,
-#         "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
-#         + subject,
-#         "bb_postprocess_struct_"
-#         + subname
-#     )
-#     print("bb_postprocess_struct completed.")
+    print("Running bb_postprocess_struct...")
+    jobPOSTPROCESS = LT.runCommand(
+        logger,
+        "$BB_BIN_DIR/bb_functional_pipeline/bb_postprocess_struct "
+        + subject,
+        "bb_postprocess_struct_"
+        + subname
+    )
+    print("bb_postprocess_struct completed.")
 
 #    print("Running tvb_prepare_gradEchoFieldMap...") # KEEP THIS SECTION COMMENTED OUT SF 22.08.2022
 #    jobGEFIELDMAP = LT.runCommand(
