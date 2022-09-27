@@ -26,6 +26,7 @@
     "T2":                           "T2/T2.nii.gz",
     "T2_notNorm":                   "raw/T2_FLAIR_notNorm.nii.gz",
     "rfMRI":                        "fMRI/rfMRI.nii.gz",
+    "rfMRI_SBRef":                  "fMRI/rfMRI_SBREF.nii.gz",
     "rfMRI_SBRef_0":                "fMRI/rfMRI_SBREF_0.nii.gz",
     "rfMRI_SBRef_1":                "fMRI/rfMRI_SBREF_1.nii.gz",
     "tfMRI":                        "fMRI/tfMRI.nii.gz",
