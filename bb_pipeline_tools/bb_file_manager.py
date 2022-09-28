@@ -934,36 +934,36 @@ def bb_file_manager(subject):
             except:
                 print("rfmri gone")
 
-            for patterns_action in patterns_actions:
-                patterns = [
-                "*musbid*.nii.gz",
-                ]
-                action = manage_fMRI_missingSBRef
-                args = ["rfMRI"]
+#             for patterns_action in patterns_actions:
+            patterns = [
+            "*musbid*.nii.gz",
+            ]
+            action = manage_fMRI_missingSBRef
+            args = ["rfMRI"]
 
-                listFiles = []
-                for fileTy in patterns:
-                    print(f"FILETYPE: {fileTy}")
-                    pat = glob.glob(os.getcwd() + "/**/" + fileTy, recursive=True)
-                    print(f"PATT: {pat}")
-                    listFiles.extend(
-                        [
-                            x
-                            for x in glob.glob(
-                                os.getcwd() + "/**/" + fileTy, recursive=True
-                            )
-                            if x not in listFiles
-                        ]
-                    )
-                logger.info(
-                    "Performing action "
-                    + action.__name__
-                    + " on files with patterns "
-                    + str(patterns)
+            listFiles = []
+            for fileTy in patterns:
+                print(f"FILETYPE: {fileTy}")
+                pat = glob.glob(os.getcwd() + "/**/" + fileTy, recursive=True)
+                print(f"PATT: {pat}")
+                listFiles.extend(
+                    [
+                        x
+                        for x in glob.glob(
+                            os.getcwd() + "/**/" + fileTy, recursive=True
+                        )
+                        if x not in listFiles
+                    ]
                 )
+            logger.info(
+                "Performing action "
+                + action.__name__
+                + " on files with patterns "
+                + str(patterns)
+            )
 
-                # print(f"DOING {action.__name__} on {listFiles}")
-                action(listFiles, *args)
+            # print(f"DOING {action.__name__} on {listFiles}")
+            action(listFiles, *args)
 
             # Create file descriptor
             logger.info(f"FILECONFIG: {fileConfig}")
