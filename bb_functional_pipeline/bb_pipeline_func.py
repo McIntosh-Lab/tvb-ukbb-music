@@ -68,7 +68,7 @@ def bb_pipeline_func(subject, fileConfiguration):
          for k in fileConfiguration.keys()
          if "rfMRI" in k and "oldpath" not in k and "SBRef" not in k
     ]
-
+    print(rfMRI_nums)
     # print(st)
 
     print("Beginning functional pipeline")
@@ -107,7 +107,7 @@ def bb_pipeline_func(subject, fileConfiguration):
                 logger,
                 "$BB_BIN_DIR/bb_functional_pipeline/bb_prepare_rfMRI "
                 + subject
-                + f" {rfMRI_nums[i]}",
+                + f" {1}",
                 f"bb_prepare_rfMRI_{i}_"
                 + subname
             )
