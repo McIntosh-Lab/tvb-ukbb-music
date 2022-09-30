@@ -59,17 +59,13 @@ def formatFileConfig():
     return result
 
 
-def generate_SBRef(origPath, outputPath, fmri_num):
+def generate_SBRef(origPath, outputPath):
     commandToRun = (
         os.environ["BB_BIN_DIR"]
         + "/bb_functional_pipeline/bb_generate_SBRef "
         + origPath
         + " "
         + outputPath
-        + " "
-        + '""'
-        + " "
-        + fmri_num
     )
     logger.warn("There was no SBRef data for the subject " + origPath)
     logger.warn(
@@ -462,17 +458,9 @@ def manage_fMRI(listFiles, flag):
             idx = 0
             SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
             print(f"SBRef_name: {SBRef_name}")
-            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_0"], str(idx))
-            fileConfig[flag + "_SBRef_0"] = idealConfig[flag + "_SBRef_0"]
-            print("SBRef 0 generated using",SBRef_name)
-            
-            idx = 1
-            SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
-            print(f"SBRef_name: {SBRef_name}")
-            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_1"], str(idx))
-            fileConfig[flag + "_SBRef_1"] = idealConfig[flag + "_SBRef_1"]
-            print("SBRef 1 generated using",SBRef_name)
-            
+            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef"])
+            fileConfig[flag + "_SBRef"] = idealConfig[flag + "_SBRef"]
+            print("SBRef generated.")
     # There are several fMRI images but neither of them have more than one volume
     else:
         logger.error(
@@ -482,128 +470,7 @@ def manage_fMRI(listFiles, flag):
         )
         move_file_add_to_config(listFiles[numFiles - 1], flag + "_SBRef", False)
 
-def manage_fMRI_missingSBRef(listFiles, flag):
 
-    # listFiles = robustSort(listFiles)
-    numFiles = len(listFiles)
-    dim = []
-
-    allFiles = [rename_no_coil_echo_info(x) for x in listFiles]
-    print(f"BEFORE: {allFiles}")
-    # keeping the naming consistent
-    listFiles = []
-
-    # read JSON to find echo with EchoTime closest
-    # to rest session (0.03 -> 0.03306) and only
-    # use that file
-    for f in allFiles:
-        if "echo" not in f:
-            listFiles.append(f)
-        else:
-            if "echo3" in f or "echo5" in f:
-
-                # get JSON version from NIFTI
-                jname = bb_path.removeImageExt(f) + ".json"
-
-                print(f"FILE: {jname}")
-                jfile = open(jname, "r")  # , encoding="utf-8")
-                jsn = json.loads(jfile.read())
-                if jsn["EchoTime"] == 0.03306:
-                    listFiles.append(f)
-    print(f"AFTER: {listFiles}")
-
-    # Get the dimensions for all the fMRI images
-    for fileName in listFiles:
-        epi_img = nib.load(fileName)
-        dim.append(epi_img.get_header()["dim"][4])
-
-    if numFiles == 0:
-        logger.warn("There was no " + flag + " FMRI data")
-
-    # elif numFiles == 1:
-    #     # If the only fMRI we have is the SBRef
-    #     if dim[0] == 1:
-    #         logger.error(
-    #             "There was only SBRef data for the subject. There will be no "
-    #             + flag
-    #             + "fMRI processing"
-    #         )
-    #         move_file_add_to_config(listFiles[0], flag + "_SBRef", False)
-
-    # If we have fMRI data but no SBRef, we generate it.
-    # else:
-    #     index = 0
-    #     move_index_file_add_to_config(listFiles[0], flag, index, False)
-    #     generate_SBRef(idealConfig[flag], idealConfig[flag + "_SBRef"])
-    #     fileConfig[flag + "_SBRef"] = idealConfig[flag + "_SBRef"]
-
-    # elif numFiles == 2:
-    #     biggestImageDim = max(dim)
-    #     indBiggestImage = dim.index(biggestImageDim)
-    #     indSmallestImage = 1 - indBiggestImage
-
-    #     # If there is at least one propper fMRI image
-    #     if biggestImageDim > 1:
-    #         move_file_add_to_config(listFiles[indBiggestImage], flag, False)
-
-    #         # If the other image is an SBRef image
-    #         if dim[indSmallestImage] == 1:
-    #             move_file_add_to_config(
-    #                 listFiles[indSmallestImage], flag + "_SBRef", False
-    #             )
-
-    #         # If not, forget about it and generate and SBRef
-    #         else:
-    #             generate_SBRef(idealConfig[flag], idealConfig[flag + "_SBRef"])
-    #             fileConfig[flag + "_SBRef"] = idealConfig[flag + "_SBRef"]
-
-    #     else:
-    #         logger.error(
-    #             "There was only SBRef data for the subject. There will be no "
-    #             + flag
-    #             + "fMRI processing"
-    #         )
-    #         move_file_add_to_config(listFiles[numFiles - 1], flag + "_SBRef", False)
-
-    # If there are more than 2 rfMRI images, and at least one has more than one volume,
-    # we will take the biggest one as the fMRI volume and generate take as SBRef the one
-    # with the previous numeration. If that one is not a proper SBRef, generate it.
-    elif numFiles >= 1:
-        print(f"files: {listFiles}")
-
-        # chose index with smallest dimension
-        ind = dim.index(min(dim))
-        print(f"smallest index: {ind}")
-
-        # add each fMRI file plus the index to the config
-        for i in range(len(listFiles)):
-            # don't add SBref file if it was added to the config
-            if not (i == ind and dim[i] == 1):
-                move_index_file_add_to_config(listFiles[i], flag, 1, False)
-
-        if dim[ind] == 1:
-            move_file_add_to_config(listFiles[ind], flag + "_SBRef", False)
-
-            # If not, forget about it and generate a new one
-        else:
-            
-            idx = 1
-            SBRef_name = idealConfig[flag][:-7] + f"_{idx}" + idealConfig[flag][-7:]
-            print(f"SBRef_name: {SBRef_name}")
-            generate_SBRef(SBRef_name, idealConfig[flag + "_SBRef_1"], str(idx))
-            fileConfig[flag + "_SBRef_1"] = idealConfig[flag + "_SBRef_1"]
-            print("SBRef 1 generated using",SBRef_name)
-            
-    # There are several fMRI images but neither of them have more than one volume
-    else:
-        logger.error(
-            "There was only SBRef data for the subject. There will be no "
-            + flag
-            + "fMRI processing."
-        )
-        move_file_add_to_config(listFiles[numFiles - 1], flag + "_SBRef", False)
-
-        
 def manage_DWI(listFiles):
 
     # listFiles = robustSort(listFiles)
@@ -891,6 +758,8 @@ def bb_file_manager(subject):
                 "*TASK*REST*.nii.gz",
                 "*task*rest*.nii.gz",
                 "*musbid*.nii.gz",
+                "*MID*.nii.gz",
+
             ],
             manage_fMRI,
             "rfMRI",
@@ -921,57 +790,6 @@ def bb_file_manager(subject):
     if os.path.isfile(fd_fileName):
         with open(fd_fileName, "r") as f:
             fileConfig = json.load(f)
-            
-            #ADDED for sbref fixes
-            print("sbref1 fix")
-            
-            try:
-                del fileConfig["rfMRI_oldpath_1"]
-            except:
-                print("oldpath gone")
-            try:
-                del fileConfig["rfMRI_1"]
-            except:
-                print("rfmri gone")
-
-#             for patterns_action in patterns_actions:
-            patterns = [
-            "*musbid*.nii.gz",
-            ]
-            action = manage_fMRI_missingSBRef
-            args = ["rfMRI"]
-
-            listFiles = []
-            for fileTy in patterns:
-                print(f"FILETYPE: {fileTy}")
-                pat = glob.glob(os.getcwd() + "/**/" + fileTy, recursive=True)
-                print(f"PATT: {pat}")
-                listFiles.extend(
-                    [
-                        x
-                        for x in glob.glob(
-                            os.getcwd() + "/**/" + fileTy, recursive=True
-                        )
-                        if x not in listFiles
-                    ]
-                )
-            logger.info(
-                "Performing action "
-                + action.__name__
-                + " on files with patterns "
-                + str(patterns)
-            )
-
-            # print(f"DOING {action.__name__} on {listFiles}")
-            action(listFiles, *args)
-
-            # Create file descriptor
-            logger.info(f"FILECONFIG: {fileConfig}")
-            fd = open(fd_fileName, "w")
-            json.dump(fileConfig, fd, sort_keys=True, indent=4)
-            fd.close()
-
-            
 
     else:
         for directory in directories:

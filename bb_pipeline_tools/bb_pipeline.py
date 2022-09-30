@@ -65,30 +65,30 @@ def main(cli_args=None):
     subject = argsa.subjectFolder
     subject = subject.strip()
 
-#    if subject[-1] == "/":
-#        subject = subject[0 : len(subject) - 1]
+    if subject[-1] == "/":
+        subject = subject[0 : len(subject) - 1]
 
-#    logger = LT.initLogging(__file__, subject)
+    logger = LT.initLogging(__file__, subject)
 
-#    REPARCELLATE=os.environ['REPARCELLATE']
-#    PARC_NAME=os.environ['PARC_NAME']
+    REPARCELLATE=os.environ['REPARCELLATE']
+    PARC_NAME=os.environ['PARC_NAME']
     
 
-#    if REPARCELLATE=="true":
-#        tvb_reparcellate_pipeline(subject, "none", PARC_NAME)
+    if REPARCELLATE=="true":
+        tvb_reparcellate_pipeline(subject, "none", PARC_NAME)
 
-#    if REPARCELLATE=="false":
-#
-#        logger.info("Running file manager")
-#        fileConfig = bb_file_manager(subject)
-#
-#        logger.info("File configuration before QC: " + str(fileConfig))
-#
-#        fileConfig = bb_basic_QC(subject, fileConfig)
-#
-#        logger.info("File configuration after running file manager: " + str(fileConfig))
-#
-#        # runTopup ==> Having fieldmap
+    if REPARCELLATE=="false":
+
+        logger.info("Running file manager")
+        fileConfig = bb_file_manager(subject)
+
+        logger.info("File configuration before QC: " + str(fileConfig))
+
+        fileConfig = bb_basic_QC(subject, fileConfig)
+
+        logger.info("File configuration after running file manager: " + str(fileConfig))
+
+        # runTopup ==> Having fieldmap
 #        if not (
 #            (("AP" in fileConfig) and (fileConfig["AP"] != ""))
 #            and (("PA" in fileConfig) and (fileConfig["PA"] != ""))
@@ -103,11 +103,11 @@ def main(cli_args=None):
         # runTopup = True
 
         # Default value for job id. SGE does not wait for a job with this id.
-#        jobSTEP1 = "-1"
-#        jobSTEP2 = "-1"
-#        jobSTEP3 = "-1"
-#        jobSTEP4 = "-1"
-#        jobSTEP5 = "-1"
+        jobSTEP1 = "-1"
+        jobSTEP2 = "-1"
+        jobSTEP3 = "-1"
+        jobSTEP4 = "-1"
+        jobSTEP5 = "-1"
 
         # jobSTEP1 = bb_pipeline_struct(subject, runTopup, fileConfig)
 #        bb_pipeline_struct(subject, runTopup, fileConfig) # COMMENT OUT TO SKIP STRUCTURAL PIPE
@@ -148,7 +148,7 @@ def main(cli_args=None):
 #            fileConfig
 #        )
 
-    createrdata() #This line creates the training file. We run it once with a single subject, then comment it out evermore
+        createrdata() #This line creates the training file. We run it once with a single subject, then comment it out evermore
     LT.finishLogging(logger)
     # return jobSTEP5
 

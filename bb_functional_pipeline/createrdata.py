@@ -13,5 +13,5 @@ import bb_pipeline_tools.bb_logging_tool as LT
 
 def createrdata(): 
 	logger = LT.initLogging(__file__, "") 
-#	LT.runCommand( logger, "/home/s.faber/create_RData.sh", "createrdata_k")
+	LT.runCommand( logger, "/home/s.faber/create_RData.sh", "createrdata_k")
 	LT.runCommand( logger, "/home/s.faber/create_RData_music.sh", "createrdata_k")

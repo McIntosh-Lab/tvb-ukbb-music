@@ -25,7 +25,7 @@
 origIN=`$FSLDIR/bin/remove_ext $1`
 IN=${origIN}_tmp
 # OUT=${origIN}_SBREF
-OUT=${origIN:0:${#origIN} - 2}_SBREF_${4}
+OUT=${origIN:0:${#origIN} - 2}_SBREF
 
 echo "origIN: $origIN"
 echo "input: $IN"
@@ -66,9 +66,6 @@ for f in `$FSLDIR/bin/imglob grot*` ; do
     fi
   done
 done
-
-rm scores.txt 
-#remove prev scores because the script appends
 
 for f in `$FSLDIR/bin/imglob grot*` ; do
   ff=`echo $f | sed 's/grot//g'`
