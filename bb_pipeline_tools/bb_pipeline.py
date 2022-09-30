@@ -136,19 +136,19 @@ def main(cli_args=None):
         #     subject,
         #     fileConfig
         # )
-#        bb_pipeline_func(subject, fileConfig)
+       bb_pipeline_func(subject, fileConfig)
 #        bb_pipeline_diff(subject, fileConfig) # COMMENTED OUT BY SF 12.08.2022
 
-#        bb_IDP(
-#            subject, fileConfig
-#        )
+       bb_IDP(
+           subject, fileConfig
+       )
 
-#        tvb_bb_QC(
-#            subject,
-#            fileConfig
-#        )
+       tvb_bb_QC(
+           subject,
+           fileConfig
+       )
 
-        createrdata() #This line creates the training file. We run it once with a single subject, then comment it out evermore
+        # createrdata() #This line creates the training file. We run it once with a single subject, then comment it out evermore
     LT.finishLogging(logger)
     # return jobSTEP5
 
